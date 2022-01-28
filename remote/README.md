@@ -13,8 +13,8 @@ To run this you will need to do the following:
 1. Setup the simple sound server (see the read me there) and start it running.
 2. Find the ip address of the machine running that server
 3. Edit src/main.cpp to set:
-   a. The ssid of your WiFi access point
-   b. The password of your WiFi access point
-   c. The TCP_ADDR that you recorded in step 2
+   * The ssid of your WiFi access point
+   * The password of your WiFi access point
+   * The TCP_ADDR that you recorded in step 2
 4. pio run -t upload -t monitor
 

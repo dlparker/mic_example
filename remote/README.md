@@ -1,7 +1,7 @@
 
 This program reads data from the microphone and sends it to a python server over TCP.
 The program runs 5 loops, and on each loop it makes a connection to the server, then
-read data from the mic for 5 seconds, and as it reads it sends it to the server.
+reads data from the mic for 5 seconds, and as it reads it sends it to the server.
 The server treats the new connection as a signal to start recording the data in
 a new .WAV file, and it closes the file when the connection drops.
 The sample rate for the mic read is set in src/main.cpp. This value is sent to the

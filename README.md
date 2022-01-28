@@ -1,5 +1,6 @@
 # mic_example
 TTGO T-Watch version 3 microphone example
+
 A couple of simple programs for version 3 of the T-Watch, exploring how to use the microphone. 
 One program just reads mic data for 5 seconds and reports the amount of data read, doing this 5 times.
 The other program does the same sequence, but sends the data to a python TCP server that saves the data in a .WAV file, which you can then play. 

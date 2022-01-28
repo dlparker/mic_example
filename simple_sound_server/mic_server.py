@@ -19,6 +19,8 @@ def record(client):
     with wave.open(fname, 'wb') as wf:
         client.sendall(b'go') # tell client to start
         data = client.recv(4) # client sends sample rate as four bytes msb first
+        pdata = data.hex()
+        print(f'client sent {pdata}')
         sample_rate = int.from_bytes(data, byteorder='big')
         wf.setnchannels(1)
         wf.setsampwidth(4)
@@ -50,7 +52,7 @@ def record(client):
             elapsed = time.time() - start_time
             samples_this_second  += len(data)/4 # 32 bits per sample
             if samples_this_second >= sample_rate:
-                print('a seconds worth of samples received\n', flush=True)
+                print("one second's worth of samples received", flush=True)
                 sample_seconds += 1
                 samples_this_second -= sample_rate
     elapsed = time.time() - start_time

@@ -18,7 +18,7 @@ To run this you will need to do the following:
    * The TCP_ADDR that you recorded in step 2
 4. pio run -t upload -t monitor
 
-Differences from other versions (remote, remote_async)
+# Differences from other versions (remote, remote_async)
 
 This version uses the FreeRTOS tasking mechanism to run the recording
 operation in a separate task and pin that task to processor 1. This
@@ -41,14 +41,14 @@ The sound quality of 16 bit samples is quite high in my testing, easily
 good enough for voice recording, which is my direct interest.
 
 To select the bits per sample, look for this:
-
+<pre><code>
 #define BYTES_PER_SAMPLE sizeof(uint16_t)
 //#define BYTES_PER_SAMPLE sizeof(uint32_t)
-
+</code></pre>
 and choose which one you want. If you use 16 bits, you need to run
 the simple sound server like this:
 
-$ python3 mic_server.py 2
+$ python3 ../simple_sound/server/mic_server.py 2
 
 For two bytes per sample.
 

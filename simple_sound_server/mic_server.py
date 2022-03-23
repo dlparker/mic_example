@@ -8,7 +8,7 @@ import wave
 
 TCP_IP = "0.0.0.0"
 TCP_PORT = 3334
-
+bytes_per_sample = 4
 tcp_sock = None
 
 def record(client):
@@ -23,7 +23,7 @@ def record(client):
         print(f'client sent {pdata}')
         sample_rate = int.from_bytes(data, byteorder='big')
         wf.setnchannels(1)
-        wf.setsampwidth(4)
+        wf.setsampwidth(bytes_per_sample)
         print(f'{fname} samplerate = {sample_rate}', flush=True)
         wf.setframerate(sample_rate)
         start_time = time.time()
@@ -41,7 +41,7 @@ def record(client):
                 break
             if client not in readable:
                 continue
-            data = client.recv(1024)
+            data = client.recv(1024*4)
             if len(data) == 0:
                 print('socket closed, closing file')
                 client.close()
@@ -50,21 +50,26 @@ def record(client):
             rec_count += 1
             bytes_count += len(data)
             elapsed = time.time() - start_time
-            samples_this_second  += len(data)/4 # 32 bits per sample
+            samples_this_second  += len(data)/bytes_per_sample # 16 bits per sample
             if samples_this_second >= sample_rate:
                 print("one second's worth of samples received", flush=True)
                 sample_seconds += 1
                 samples_this_second -= sample_rate
     elapsed = time.time() - start_time
     print(f"recording done: {rec_count} records, {bytes_count} bytes, loop time {elapsed}")
-    calc_value = float(bytes_count/4) / float(sample_rate)
+    calc_value = float(bytes_count/bytes_per_sample) / float(sample_rate)
     print(f"recoding seconds calculated from samples {calc_value}")
           
 
 if __name__=="__main__":
     tcp_sock = socket.socket()
     tcp_sock.bind((TCP_IP, TCP_PORT))
-    tcp_sock.listen(0)                 
+    tcp_sock.listen(0)
+    if len(sys.argv) > 1:
+        bytes_per_sample = int(sys.argv[1])
+    else:
+        bytes_per_sample = 4
+        
     print(f'tcp socket setup done, sock is {tcp_sock}')
     while True:
         client, addr = tcp_sock.accept()

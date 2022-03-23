@@ -15,3 +15,7 @@ I speculate that the WiFi operations sometimes run at a higher priorty than the 
 # Update
 
 I adapted the remote (TCP) version of the program to make a new one that uses the AsyncTCP library. After a couple hundred test cycles, I have never seen the skipped read problem. This seems to verify that the regular TCP send method can get into a blocking state where it hogs the processor so long you miss microphone reads long enough for DMA overwrite.
+
+# Update 2
+
+I added a new version that uses regular TCP operations instead of AsyncTCP, but that makes a number of changes that I have found helpful for getting reliable remote recording. The details are in the README for the new version, called remote_task

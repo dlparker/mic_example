@@ -16,5 +16,7 @@ $ python3 mic_server.py 4
 
 for 4 bytes (32 bits) per sample
 
-The default value is 4, 
+The default value is 4
+
+# When running remote_task version as checked in, use 2 bytes per sample
 
